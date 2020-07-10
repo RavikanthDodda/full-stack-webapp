@@ -3,6 +3,7 @@ package com.dapps.webapp.Models;
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -10,12 +11,12 @@ public class Ad {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     @NotNull
-    Float size;
+    String size;
     @NotBlank
     String place;
     @NotBlank
     String details;
-    @ManyToOne @JoinColumn(name = "USER_EMAIL", referencedColumnName = "email")
+    @ManyToOne @JoinColumn(name = "USER_ID")
     User user;
 
     @OneToMany(mappedBy = "ad",cascade = CascadeType.ALL)
@@ -24,10 +25,11 @@ public class Ad {
     protected  Ad() {
     }
 
-    public Ad(Float size, String place, String details) {
+    public Ad(String size, String place, String details, List<Image> images) {
         this.size = size;
         this.place = place;
         this.details = details;
+        this.images = images;
     }
 
     public Long getId() {
@@ -38,11 +40,11 @@ public class Ad {
         this.id = id;
     }
 
-    public Float getSize() {
+    public String getSize() {
         return size;
     }
 
-    public void setSize(Float size) {
+    public void setSize(String size) {
         this.size = size;
     }
 
@@ -68,5 +70,13 @@ public class Ad {
 
     public void setUser(User user) {
         this.user = user;
+    }
+
+    public List<Image> getImages() {
+        return images;
+    }
+
+    public void setImages(List<Image> images) {
+        this.images = images;
     }
 }

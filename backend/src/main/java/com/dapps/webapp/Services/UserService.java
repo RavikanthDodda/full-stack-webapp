@@ -3,11 +3,10 @@ package com.dapps.webapp.Services;
 import com.dapps.webapp.JpaRepositories.UserRepository;
 import com.dapps.webapp.Models.User;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -17,13 +16,19 @@ public class UserService {
     private UserRepository userRepository;
 
 
-    public void addUser(User user){
+    public void addUser(User user) throws Exception {
         user.setPassword(getEncodedPassword(user.getPassword()));
-        userRepository.save(user);
+        if(!userRepository.findByEmail(user.getEmail()).isPresent())
+            userRepository.save(user);
+        else{
+            throw new Exception("User with email "+user.getEmail()+" already exists");
+        }
     }
 
-    public Optional<User> getUser(String email){
-        return userRepository.findByEmail(email);
+    public User getUser(String email){
+        Optional<User> user = userRepository.findByEmail(email);
+        user.orElseThrow(() -> new UsernameNotFoundException("Email not found: "+email));
+        return user.get();
     }
 
     public void updateUser(User user,String email){

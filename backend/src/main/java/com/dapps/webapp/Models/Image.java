@@ -12,7 +12,7 @@ public class Image {
     Long id;
 
     @NotNull
-    String Url;
+    String url;
 
     @ManyToOne @JoinColumn(name = "ad_id",referencedColumnName = "id")
     Ad ad;
@@ -26,11 +26,11 @@ public class Image {
     }
 
     public String getUrl() {
-        return Url;
+        return url;
     }
 
     public void setUrl(String url) {
-        Url = url;
+        this.url = url;
     }
 
     public Ad getAd() {
