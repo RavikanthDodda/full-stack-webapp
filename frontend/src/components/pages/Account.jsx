@@ -1,16 +1,18 @@
 import React from 'react';
 import { Button, FormControl, TextField } from '@material-ui/core';
 
-function Login(props) {
+function Account(props) {
     return (
         <div>
            <FormControl>
            <TextField variant="outlined" label="Email"/>  
            <TextField variant="outlined" label="Password"/>  
-           <Button onClick={props.logIn}>LogIn</Button>
+           <TextField variant="outlined" label="First Name"/>  
+           <TextField variant="outlined" label="Last Name"/>  
+           <TextField variant="outlined" label="Phone"/>  
             </FormControl> 
         </div>
     )
 }
 
-export default Login;
+export default Account;

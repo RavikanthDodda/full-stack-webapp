@@ -5,6 +5,9 @@ import { Grid, Box } from "@material-ui/core";
 
 import Header from "./components/layouts/Header";
 import Login from "./components/pages/Login";
+import Registration from "./components/pages/Registration";
+import Account from "./components/pages/Account";
+import UserAds from "./components/pages/UserAds";
 import Home from "./components/pages/Home";
 
 const cookies = new Cookies();
@@ -36,6 +39,18 @@ function App() {
                 exact
                 path="/"
                 render={() => <Home  />}
+              />
+              <Route
+                path="/register"
+                render={() => <Registration  />}
+              />
+              <Route
+                path="/user/account"
+                render={() => <Account  />}
+              />
+              <Route
+                path="/user/ads"
+                render={() => <UserAds  />}
               />
             </Grid>
             <Grid item xs={false} sm={false} md={1} />
