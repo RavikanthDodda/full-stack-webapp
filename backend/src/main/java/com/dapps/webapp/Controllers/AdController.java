@@ -5,11 +5,10 @@ import com.dapps.webapp.Services.AdService;
 import com.dapps.webapp.Utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import java.util.List;
 
+@CrossOrigin(allowCredentials = "true")
 @RestController
 public class AdController {
 
@@ -32,9 +31,9 @@ public class AdController {
     }
 
     @GetMapping("/ads/user")
-    public ResponseEntity<?> getUserAds(@RequestHeader String Authorization){
+    public ResponseEntity<?> getUserAds(@RequestHeader String Cookie){
 
-        String email = jwtUtil.getUsernameFromToken(Authorization.substring(4));
+        String email = jwtUtil.getUsernameFromToken(Cookie.substring(4));
         return ResponseEntity.ok(adService.getAdsByUser(email));
     }
 

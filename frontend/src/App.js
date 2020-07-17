@@ -1,6 +1,6 @@
 import Cookies from "universal-cookie";
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route } from "react-router-dom";
+import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Grid, Box } from "@material-ui/core";
 
 import Header from "./components/layouts/Header";
@@ -13,13 +13,18 @@ import Home from "./components/pages/Home";
 const cookies = new Cookies();
 
 function App() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const [loggedIn, setLoggedIn] = useState(cookies.get("jwt")!=null);
 
-  const logIn = () => {
+  
+
+  const logIn = (jwt) => {
+    cookies.set("jwt", jwt )
     setLoggedIn(true);
+   
   };
+
   const logOut = () => {
-    cookies.remove("token")
+    cookies.remove("jwt")
     setLoggedIn(false);
   };
 
@@ -31,9 +36,10 @@ function App() {
           <Grid container item alignItems="center">
             <Grid item xs={false} sm={false} md={1} />
             <Grid item xs={12} sm={12} md={10}>
+              <Switch>
               <Route
                 path="/login"
-                render={() => <Login logIn={logIn} />}
+                render={() => <Login logIn={logIn} loggedIn = {loggedIn} />}
               />
               <Route
                 exact
@@ -52,6 +58,7 @@ function App() {
                 path="/user/ads"
                 render={() => <UserAds  />}
               />
+              </Switch>
             </Grid>
             <Grid item xs={false} sm={false} md={1} />
           </Grid>

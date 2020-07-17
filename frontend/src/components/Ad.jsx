@@ -11,7 +11,8 @@ import {
 
 
 function Ad(props) {
-  const { title, details, contact } = props;
+  
+  const {  details } = props.ad;
   return (
     <div>
       <Card >
@@ -21,15 +22,15 @@ function Ad(props) {
             title="Contemplative Reptile"
           />
           <CardContent>
-            <Typography gutterBottom variant="h5" component="h2">
+            {/* <Typography gutterBottom variant="h5" component="h2">
               {title}
-            </Typography>
+            </Typography> */}
             <Typography variant="body2" color="textSecondary" component="p">
-              {details}
+              {"Details : "+ details}    
             </Typography>
-            <Typography variant="body2" color="textSecondary" component="p">
+            {/* <Typography variant="body2" color="textSecondary" component="p">
               {contact}
-            </Typography>
+            </Typography> */}
           </CardContent>
         </CardActionArea>
         <CardActions>
