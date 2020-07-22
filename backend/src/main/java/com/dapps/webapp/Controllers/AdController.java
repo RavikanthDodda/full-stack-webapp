@@ -19,8 +19,8 @@ public class AdController {
     JwtUtil jwtUtil;
 
     @PostMapping("/ad")
-    public ResponseEntity<?> postAd(@RequestHeader String Authorization,@RequestBody Ad ad){
-        String email = jwtUtil.getUsernameFromToken(Authorization.substring(4));
+    public ResponseEntity<?> postAd(@RequestHeader String Cookie,@RequestBody Ad ad){
+        String email = jwtUtil.getUsernameFromToken(Cookie.substring(4));
         adService.postAd(ad,email);
         return ResponseEntity.ok(null);
     }

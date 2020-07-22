@@ -10,7 +10,11 @@ class UserService {
     }
 
     getUserAds = () => {
-        return Axios.get(baseUrl + "/ads/user", {withCredentials: true})
+        return Axios.get(baseUrl + "/ads/user", {withCredentials: true});
+    }
+
+    postAd = (ad) => {
+        return Axios.get(baseUrl + "/ad", ad,  {withCredentials: true});
     }
 
 }

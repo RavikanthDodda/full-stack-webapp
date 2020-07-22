@@ -9,6 +9,10 @@ class AuthService {
         return Axios.post( baseUrl + "/authenticate", user );
     }
 
+    register = (user) => {
+        return Axios.post( baseUrl + "/register", user );
+    }
+
 
 }
 
