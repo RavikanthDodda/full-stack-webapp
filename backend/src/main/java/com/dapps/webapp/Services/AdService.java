@@ -3,8 +3,7 @@ package com.dapps.webapp.Services;
 import com.dapps.webapp.JpaRepositories.AdRepository;
 import com.dapps.webapp.Models.Ad;
 import com.dapps.webapp.Models.Image;
-import com.dapps.webapp.Models.User;
-import com.dapps.webapp.Utils.AdResponse;
+import com.dapps.webapp.Utils.AdReqRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -24,36 +23,35 @@ public class AdService {
     @Autowired
     ImageService imageService;
 
-    public List<AdResponse> getAllAds(){
+    public List<AdReqRes> getAllAds(){
         return getAdResponse(adRepository.findAll());
     }
 
-    public List<AdResponse> getAdsByUser(String email){
+    public List<AdReqRes> getAdsByUser(String email){
         return getAdResponse(adRepository.findByUser(userService.getUser(email)));
     }
 
-    public void postAd(Ad ad, String email){
+    public void postAd(AdReqRes adReq, String email){
+        Ad ad = new Ad(adReq);
         ad.setUser(userService.getUser(email));
-        List<Image> images= ad.getImages();
-        ad.setImages(new ArrayList<>());
-        adRepository.save(ad);
-
-        images.stream().forEach(image -> {
-            image.setAd(ad);
+        List<Image> images = new ArrayList<>();
+        adReq.getImages().forEach(image_url -> {
+            Image image = new Image(image_url, ad);
             imageService.save(image);
+            images.add(image);
         });
-
-
+        ad.setImages(images);
+        adRepository.save(ad);
     }
 
-    private List<AdResponse> getAdResponse(Iterable<Ad> ads){
-        List<AdResponse> adResponses = new ArrayList<>();
+    private List<AdReqRes> getAdResponse(Iterable<Ad> ads){
+        List<AdReqRes> adResponse = new ArrayList<>();
         ads.forEach(ad -> {
-            AdResponse adResponse = new AdResponse(ad.getPlace(),ad.getSize(),ad.getDetails());
+            AdReqRes adReqRes = new AdReqRes(ad.getContact(),ad.getTitle(), ad.getDetails());
             List<String> images = ad.getImages().stream().map(Image::getUrl).collect(Collectors.toList());
-            adResponse.setImages(images);
-            adResponses.add(adResponse);
+            adReqRes.setImages(images);
+            adResponse.add(adReqRes);
         });
-        return adResponses;
+        return adResponse;
     }
 }

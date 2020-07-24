@@ -27,8 +27,8 @@ function App() {
     cookies.remove("jwt")
     setLoggedIn(false);
   };
-
   return (
+    
     <div className="App">
       <Router>
         <Header isSignedIn={loggedIn} logOut={logOut} />

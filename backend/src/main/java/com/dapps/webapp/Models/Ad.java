@@ -1,9 +1,10 @@
 package com.dapps.webapp.Models;
 
+import com.dapps.webapp.Utils.AdReqRes;
+
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
-import java.util.ArrayList;
 import java.util.List;
 
 @Entity
@@ -11,9 +12,9 @@ public class Ad {
     @Id @GeneratedValue(strategy = GenerationType.AUTO)
     Long id;
     @NotNull
-    String size;
+    String title;
     @NotBlank
-    String place;
+    String contact;
     @NotBlank
     String details;
     @ManyToOne @JoinColumn(name = "USER_ID")
@@ -22,14 +23,20 @@ public class Ad {
     @OneToMany(mappedBy = "ad",cascade = CascadeType.ALL)
     List<Image> images;
 
-    protected  Ad() {
+    public   Ad() {
     }
 
-    public Ad(String size, String place, String details, List<Image> images) {
-        this.size = size;
-        this.place = place;
+    public Ad(String title, String contact, String details, List<Image> images) {
+        this.title = title;
+        this.contact = contact;
         this.details = details;
         this.images = images;
+    }
+
+    public Ad(AdReqRes adReqRes) {
+        this.title = adReqRes.getTitle();
+        this.contact = adReqRes.getContact();
+        this.details = adReqRes.getDetails();
     }
 
     public Long getId() {
@@ -40,20 +47,20 @@ public class Ad {
         this.id = id;
     }
 
-    public String getSize() {
-        return size;
+    public String getTitle() {
+        return title;
     }
 
-    public void setSize(String size) {
-        this.size = size;
+    public void setTitle(String title) {
+        this.title = title;
     }
 
-    public String getPlace() {
-        return place;
+    public String getContact() {
+        return contact;
     }
 
-    public void setPlace(String place) {
-        this.place = place;
+    public void setContact(String contact) {
+        this.contact = contact;
     }
 
     public String getDetails() {

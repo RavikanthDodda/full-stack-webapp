@@ -17,6 +17,14 @@ public class Image {
     @ManyToOne @JoinColumn(name = "ad_id",referencedColumnName = "id")
     Ad ad;
 
+    public Image(@NotNull String url, Ad ad) {
+        this.url = url;
+        this.ad = ad;
+    }
+
+    public Image() {
+    }
+
     public Long getId() {
         return id;
     }
