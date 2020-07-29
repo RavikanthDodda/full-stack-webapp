@@ -4,11 +4,33 @@ import {
   TextField,
   TextareaAutosize,
   Button,
+  Card
 } from "@material-ui/core";
+import { makeStyles } from "@material-ui/core/styles";
 import UserService from "../services/UserService";
 import uploadImage from "../services/ImageService";
 
+
+
+const useStyles = makeStyles({
+  root: {
+    display: "flex",
+    justifyContent: "center",
+  },
+  card: {
+    padding: "1rem 4rem",
+    display: "flex",
+    justifyContent: "center",
+  },
+  text: {
+    margin: "0.3rem 0rem",
+  },
+  button: {},
+});
+
 function PostAd() {
+  const classes = useStyles();
+
   const [ad, setAd] = useState({ title: "", details: "", contact: "" });
   const [uploading, setUploading] = useState(false);
 
@@ -55,9 +77,10 @@ function PostAd() {
   };
 
   return (
-    <div>
+    <div className= {classes.root} >
+      <Card className={classes.card}>
       <FormControl>
-        <TextField label="Title" onChange={onChange} name="title" />
+        <TextField label="Title" className={classes.text} onChange={onChange} name="title" />
         <TextareaAutosize
           rowsMax={4}
           rowsMin={2}
@@ -65,10 +88,11 @@ function PostAd() {
           onChange={onChange}
           name="details"
         />
-        <TextField label="Contact info" onChange={onChange} name="contact" />
+        <TextField label="Contact info" className={classes.text} onChange={onChange} name="contact" />
         <input type="file" name="file" multiple onChange={onChange} />
         <Button onClick={post}>Post ad</Button>
       </FormControl>
+      </Card>
     </div>
   );
 }

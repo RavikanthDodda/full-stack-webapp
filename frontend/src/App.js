@@ -2,6 +2,7 @@ import Cookies from "universal-cookie";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Grid, Box } from "@material-ui/core";
+import {ThemeProvider } from "@material-ui/core/styles";
 
 import Header from "./components/layouts/Header";
 import Login from "./components/pages/Login";
@@ -12,11 +13,11 @@ import Home from "./components/pages/Home";
 
 const cookies = new Cookies();
 
+
+// const theme = {};
+
 function App() {
   const [loggedIn, setLoggedIn] = useState(cookies.get("jwt")!=null);
-
-  
-
   const logIn = (jwt) => {
     cookies.set("jwt", jwt )
     setLoggedIn(true);
@@ -28,8 +29,8 @@ function App() {
     setLoggedIn(false);
   };
   return (
-    
     <div className="App">
+    {/* <ThemeProvider theme={theme}> */}
       <Router>
         <Header isSignedIn={loggedIn} logOut={logOut} />
         <Box mt="2rem">
@@ -64,6 +65,7 @@ function App() {
           </Grid>
         </Box>{" "}
       </Router>
+      {/* </ThemeProvider> */}
     </div>
   );
 }
