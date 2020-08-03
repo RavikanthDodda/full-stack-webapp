@@ -4,13 +4,11 @@ import {
   TextField,
   TextareaAutosize,
   Button,
-  Card
+  Card,
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import UserService from "../services/UserService";
 import uploadImage from "../services/ImageService";
-
-
 
 const useStyles = makeStyles({
   root: {
@@ -36,14 +34,13 @@ function PostAd() {
 
   let images = [];
 
-  const post =  () => {
+  const post = () => {
     setUploading(true);
     // const image_urls = uploadImage(images);
-    ad.images = []
-    
-    UserService.postNewAd(ad).then( response => {
+    ad.images = [];
+
+    UserService.postNewAd(ad).then((response) => {
       console.log(response.status);
-      
     });
     setUploading(false);
   };
@@ -77,21 +74,31 @@ function PostAd() {
   };
 
   return (
-    <div className= {classes.root} >
+    <div className={classes.root}>
       <Card className={classes.card}>
-      <FormControl>
-        <TextField label="Title" className={classes.text} onChange={onChange} name="title" />
-        <TextareaAutosize
-          rowsMax={4}
-          rowsMin={2}
-          placholder="Details"
-          onChange={onChange}
-          name="details"
-        />
-        <TextField label="Contact info" className={classes.text} onChange={onChange} name="contact" />
-        <input type="file" name="file" multiple onChange={onChange} />
-        <Button onClick={post}>Post ad</Button>
-      </FormControl>
+        <FormControl>
+          <TextField
+            label="Title"
+            className={classes.text}
+            onChange={onChange}
+            name="title"
+          />
+          <TextareaAutosize
+            rowsMax={4}
+            rowsMin={2}
+            placholder="Details"
+            onChange={onChange}
+            name="details"
+          />
+          <TextField
+            label="Contact info"
+            className={classes.text}
+            onChange={onChange}
+            name="contact"
+          />
+          <input type="file" name="file" multiple onChange={onChange} />
+          <Button onClick={post}>Post ad</Button>
+        </FormControl>
       </Card>
     </div>
   );

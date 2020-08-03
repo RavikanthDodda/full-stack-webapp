@@ -9,24 +9,20 @@ import {
   Button,
 } from "@material-ui/core";
 
-
 function Ad(props) {
-  
-  const {  details } = props.ad;
+  const { details } = props.ad;
+  const { key } = props;
+
   return (
     <div>
-      <Card >
+      <Card>
         <CardActionArea>
-          <CardMedia
-            image=""
-            title="Contemplative Reptile"
-          />
           <CardContent>
             {/* <Typography gutterBottom variant="h5" component="h2">
               {title}
             </Typography> */}
             <Typography variant="body2" color="textSecondary" component="p">
-              {"Details : "+ details}    
+              {"Details : " + details}
             </Typography>
             {/* <Typography variant="body2" color="textSecondary" component="p">
               {contact}

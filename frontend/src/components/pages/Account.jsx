@@ -1,11 +1,15 @@
-import React, { useState } from "react";
-import { Button, FormControl, TextField, Card } from "@material-ui/core";
+import React, { useState, useEffect } from "react";
+import {
+  Button,
+  FormControl,
+  TextField,
+  CircularProgress,
+} from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import UserService from "../../services/UserService";
 
 const useStyles = makeStyles({
   root: {
-    
     display: "flex",
     justifyContent: "center",
   },
@@ -17,6 +21,7 @@ const useStyles = makeStyles({
 
 function Account(props) {
   const classes = useStyles();
+  const [loading, setLoading] = useState(false);
   const [user, setUser] = useState({
     email: "",
     password: "",
@@ -24,6 +29,16 @@ function Account(props) {
     lastname: "",
     phone: "",
   });
+
+  useEffect(() => {
+    setLoading(true);
+    const getUser = async () => {
+      const response = await UserService.getUserDetails();
+      setUser(response.data);
+    };
+    getUser();
+    setLoading(false);
+  }, []);
 
   const onChange = (e) => {
     switch (e.target.name) {
@@ -81,10 +96,11 @@ function Account(props) {
       console.log(res.status);
     });
   };
-
-  return (
-    <div className={classes.root}>
-      
+  const getContent = () => {
+    if (loading) {
+      return <CircularProgress />;
+    } else {
+      return (
         <FormControl>
           <TextField
             className={classes.text}
@@ -92,7 +108,7 @@ function Account(props) {
             label="Email"
             name="email"
             type="email"
-            onChange={onChange}
+            defaultValue={user.email}
           />
           <TextField
             className={classes.text}
@@ -126,9 +142,10 @@ function Account(props) {
           />
           <Button onClick={update}>Update profile</Button>
         </FormControl>
-
-    </div>
-  );
+      );
+    }
+  };
+  return <div className={classes.root}>{getContent()}</div>;
 }
 
 export default Account;

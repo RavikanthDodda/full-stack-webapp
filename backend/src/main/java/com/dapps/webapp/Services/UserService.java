@@ -2,6 +2,7 @@ package com.dapps.webapp.Services;
 
 import com.dapps.webapp.JpaRepositories.UserRepository;
 import com.dapps.webapp.Models.User;
+import com.dapps.webapp.Utils.UserDetailsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -25,12 +26,18 @@ public class UserService {
         }
     }
 
-    public User getUser(String email){
+    public UserDetailsResponse getUserDetails(String email){
         Optional<User> user = userRepository.findByEmail(email);
         user.orElseThrow(() -> new UsernameNotFoundException("Email not found: "+email));
-        return user.get();
+        User user1 = user.get();
+        return new UserDetailsResponse(user1.getId(),user1.getEmail(),user1.getFirstname(), user1.getLastname(),user1.getPhone());
     }
 
+    public User getUser(String email) {
+        Optional<User> user = userRepository.findByEmail(email);
+        user.orElseThrow(() -> new UsernameNotFoundException("Email not found: " + email));
+        return user.get();
+    }
     public void updateUser(User user,String email){
 
         Optional<User> u = userRepository.findByEmail(email);

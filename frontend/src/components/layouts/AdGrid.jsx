@@ -1,22 +1,23 @@
 import React from "react";
-import  Ad  from "../Ad";
-import { Grid, Box } from "@material-ui/core";
+import Ad from "../Ad";
+import { Grid, Box, CircularProgress } from "@material-ui/core";
 
 function AdGrid(props) {
-  
-    const {ads} = props;
-    
+  const { ads, loading } = props;
+  if (loading) {
+    return (
+      <div>
+        <CircularProgress />
+      </div>
+    );
+  }
   return (
     <div>
       <Grid container spacing={2} alignItems="center" justify="center">
-        {
-        ads.map((ad) => (
-          <Grid item xs={12} sm={4}>
+        {ads.map((ad) => (
+          <Grid key={ad.id} item xs={12} sm={4}>
             <Box mt={2}>
-              <Ad
-               key = {ad.id}
-               ad = {ad}
-              />
+              <Ad key={ad.id} ad={ad} />
             </Box>
           </Grid>
         ))}

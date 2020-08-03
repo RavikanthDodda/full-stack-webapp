@@ -1,24 +1,24 @@
-import  Axios from "axios";
-
+import Axios from "axios";
 
 const baseUrl = "http://localhost:8080";
 
 class UserService {
+  getUserDetails = () => {
+    return Axios.get(baseUrl + "/user", { withCredentials: true });
+  };
+  getAllAds = () => {
+    return Axios.get(baseUrl + "/ads");
+  };
 
-    getAllAds = () => {
-        return Axios.get(baseUrl + "/ads" );
-    }
+  getUserAds = () => {
+    return Axios.get(baseUrl + "/ads/user", { withCredentials: true });
+  };
 
-    getUserAds = () => {
-        return Axios.get(baseUrl + "/ads/user", {withCredentials: true});
-    }
+  postNewAd = (ad) => {
+    console.log(ad);
 
-    postNewAd = (ad) => {
-        console.log(ad);
-        
-        return Axios.post(baseUrl + "/ad", ad, { withCredentials: true});
-    }
-
+    return Axios.post(baseUrl + "/ad", ad, { withCredentials: true });
+  };
 }
 
 export default new UserService();
