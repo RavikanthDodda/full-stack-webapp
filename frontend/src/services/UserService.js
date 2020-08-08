@@ -15,8 +15,6 @@ class UserService {
   };
 
   postNewAd = (ad) => {
-    console.log(ad);
-
     return Axios.post(baseUrl + "/ad", ad, { withCredentials: true });
   };
 }

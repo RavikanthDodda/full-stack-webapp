@@ -25,9 +25,13 @@ class Login extends Component {
       form: this.state.form,
       loading: true,
     });
-    await AuthService.authenticate(this.state.form).then((response) => {
-      this.props.logIn(response.data.jwt);
-    });
+    await AuthService.authenticate(this.state.form)
+      .then((response) => {
+        this.props.logIn(response.data);
+      })
+      .catch((err) => {
+        console.log("wrong creds");
+      });
     this.setState({
       form: this.state.form,
       loading: false,
@@ -36,13 +40,16 @@ class Login extends Component {
 
   redirect = () => {
     if (this.props.loggedIn) {
-      console.log("hi");
       return <Redirect to="/" />;
     }
   };
 
   isLoading = () => {
-    return this.state.loading ? <CircularProgress /> : null;
+    return this.state.loading ? (
+      <CircularProgress />
+    ) : (
+      <Button onClick={this.authenticate}>LogIn</Button>
+    );
   };
 
   updateField = (event) => {
@@ -70,7 +77,7 @@ class Login extends Component {
   };
   render() {
     return (
-      <div>
+      <div style={{ textAlign: "center" }}>
         <FormControl>
           <TextField
             variant="outlined"
@@ -85,9 +92,8 @@ class Login extends Component {
             type="password"
             onChange={this.updateField}
           />
-          <Button onClick={this.authenticate}>LogIn</Button>
+          <div style={{ textAlign: "center" }}>{this.isLoading()}</div>
           {this.redirect()}
-          {this.isLoading()}
         </FormControl>
       </div>
     );

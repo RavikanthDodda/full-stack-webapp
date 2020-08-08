@@ -9,11 +9,23 @@ const useStyles = makeStyles({
     display: "flex",
     justifyContent: "center",
   },
-  pagination: {
-    listStyleType: "none",
+  list: {
+    textAlign: "center",
   },
-  li: {
+  link: {
+    listStyleType: "none",
+    textDecoration: "none",
+    padding: "0.5rem",
+  },
+  item: {
+    textDecoration: "none",
+    padding: "0.1rem",
+    margin: "0.2rem",
+    height: "0.3rem",
+    width: "0.3rem",
     display: "inline",
+    border: "1px white ridge",
+    borderRadius: "5px",
   },
 });
 
@@ -35,8 +47,6 @@ function Home() {
     getAds();
   }, []);
 
-  console.log(ads);
-
   const start = (activePage - 1) * itemsPerPage;
   const end =
     activePage * itemsPerPage > ads.length
@@ -44,23 +54,23 @@ function Home() {
       : activePage * itemsPerPage;
   const items = ads.slice(start, end);
   const handlePageChange = (pageNumber) => {
-    console.log(`active page is ${pageNumber}`);
     setActivePage(pageNumber);
   };
 
   return (
     <React.Fragment>
       <AdGrid ads={items} loading={loading} />
-      <Pagination
-        className={classes.pagination}
-        activePage={activePage}
-        itemsCountPerPage={itemsPerPage}
-        totalItemsCount={ads.length}
-        pageRangeDisplayed={5}
-        onChange={handlePageChange}
-        itemClass={classes.li}
-        linkClass={classes.pagination}
-      />
+      <div className={classes.list}>
+        <Pagination
+          activePage={activePage}
+          itemsCountPerPage={itemsPerPage}
+          totalItemsCount={ads.length}
+          pageRangeDisplayed={5}
+          onChange={handlePageChange}
+          itemClass={classes.item}
+          linkClass={classes.link}
+        />
+      </div>
     </React.Fragment>
   );
 }

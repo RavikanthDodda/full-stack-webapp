@@ -4,15 +4,16 @@ import { Grid, Box, CircularProgress } from "@material-ui/core";
 
 function AdGrid(props) {
   const { ads, loading } = props;
+  console.log(ads);
   if (loading) {
     return (
-      <div>
+      <div style={{ textAlign: "center", marginBottom: "2rem" }}>
         <CircularProgress />
       </div>
     );
   }
   return (
-    <div>
+    <div style={{ marginBottom: "2rem" }}>
       <Grid container spacing={2} alignItems="center" justify="center">
         {ads.map((ad) => (
           <Grid key={ad.id} item xs={12} sm={4}>

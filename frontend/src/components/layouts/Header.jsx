@@ -11,7 +11,7 @@ const useStyles = makeStyles({
   options: {
     width: "100%",
     display: "flex",
-    justifyContent: "end",
+    justifyContent: "flex-end",
   },
   link: {
     textDecoration: "None",

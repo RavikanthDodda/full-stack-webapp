@@ -9,17 +9,16 @@ function UserAds() {
   const [ads, setAds] = useState([]);
 
   useEffect(() => {
-    UserService.getAllAds()
+    UserService.getUserAds()
       .then((response) => {
-        console.log("call");
         setAds(response.data);
       })
       .catch((err) => {
         console.log(err);
-        return [];
       });
-  });
+  }, []);
 
+  console.log(ads);
   return (
     <div>
       <PostAd />
