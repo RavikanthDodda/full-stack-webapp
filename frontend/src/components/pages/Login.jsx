@@ -27,7 +27,7 @@ class Login extends Component {
     });
     await AuthService.authenticate(this.state.form)
       .then((response) => {
-        this.props.logIn(response.data);
+        this.props.logIn(response.data.jwt);
       })
       .catch((err) => {
         console.log("wrong creds");
@@ -80,12 +80,14 @@ class Login extends Component {
       <div style={{ textAlign: "center" }}>
         <FormControl>
           <TextField
+            style={{ margin: "0.5rem" }}
             variant="outlined"
             label="Email"
             name="email"
             onChange={this.updateField}
           />
           <TextField
+            style={{ margin: "0.5rem" }}
             variant="outlined"
             label="Password"
             name="password"

@@ -10,7 +10,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   text: {
-    margin: "0.3rem 0rem",
+    margin: "0.5rem 0rem",
   },
   button: {},
 });

@@ -34,11 +34,10 @@ function PostAd() {
 
   let images = [];
 
-  const post = () => {
+  const post = async () => {
     setUploading(true);
-    // const image_urls = uploadImage(images);
-    ad.images = [];
-
+    ad.images = await uploadImage(images);
+    console.log(ad);
     UserService.postNewAd(ad).then((response) => {
       console.log(response.status);
     });

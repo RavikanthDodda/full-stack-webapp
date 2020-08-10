@@ -32,6 +32,7 @@ function Account(props) {
 
   useEffect(() => {
     setLoading(true);
+    console.log("account");
     const getUser = async () => {
       const response = await UserService.getUserDetails();
       setUser(response.data);
@@ -108,7 +109,7 @@ function Account(props) {
             label="Email"
             name="email"
             type="email"
-            defaultValue={user.email}
+            value={user.email}
           />
           <TextField
             className={classes.text}

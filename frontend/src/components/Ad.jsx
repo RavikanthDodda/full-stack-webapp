@@ -10,17 +10,24 @@ import {
 } from "@material-ui/core";
 
 function Ad(props) {
-  const { details } = props.ad;
+  const { title, details } = props.ad;
   const { key } = props;
 
   return (
     <div>
       <Card>
         <CardActionArea>
+          <CardMedia
+            component="img"
+            alt="image here"
+            height="140"
+            image=""
+            title={title}
+          />
           <CardContent>
-            {/* <Typography gutterBottom variant="h5" component="h2">
+            <Typography gutterBottom variant="h5" component="h2">
               {title}
-            </Typography> */}
+            </Typography>
             <Typography variant="body2" color="textSecondary" component="p">
               {"Details : " + details}
             </Typography>
