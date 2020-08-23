@@ -1,7 +1,7 @@
 import React from "react";
 import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
-import { makeStyles } from "@material-ui/styles";
+import { makeStyles, useTheme } from "@material-ui/styles";
 
 const useStyles = makeStyles({
   bar: {
@@ -16,10 +16,14 @@ const useStyles = makeStyles({
   link: {
     textDecoration: "None",
     marginLeft: "0.6rem",
+    link: "white",
+    "& Typography": {
+      //  (theme) => theme.palette.text.primary,
+    },
   },
 });
-
 function Header(props) {
+  const theme = useTheme();
   const classes = useStyles();
   return (
     <AppBar position="static">

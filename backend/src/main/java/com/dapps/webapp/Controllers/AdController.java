@@ -33,7 +33,7 @@ public class AdController {
     }
 
     @CrossOrigin(allowCredentials = "true")
-    @GetMapping("/ads/user")
+    @GetMapping("/user/ads")
     public ResponseEntity<?> getUserAds(@RequestHeader String Cookie){
 
         String email = jwtUtil.getUsernameFromToken(Cookie.substring(4));

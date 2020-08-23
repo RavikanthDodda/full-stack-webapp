@@ -2,7 +2,9 @@ import Cookies from "universal-cookie";
 import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Grid, Box } from "@material-ui/core";
-import { ThemeProvider } from "@material-ui/core/styles";
+import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
+import purple from "@material-ui/core/colors/purple";
+import green from "@material-ui/core/colors/green";
 
 import Header from "./components/layouts/Header";
 import Login from "./components/pages/Login";
@@ -13,7 +15,17 @@ import Home from "./components/pages/Home";
 
 const cookies = new Cookies();
 
-// const theme = {};
+const theme = createMuiTheme({
+  palette: {
+    type: "dark",
+    primary: {
+      main: "#388e3c",
+    },
+    secondary: {
+      main: green[500],
+    },
+  },
+});
 
 function App() {
   const [loggedIn, setLoggedIn] = useState(cookies.get("jwt") != null);
@@ -28,8 +40,8 @@ function App() {
     setLoggedIn(false);
   };
   return (
+    // <ThemeProvider theme={theme}>
     <div className="App">
-      {/* <ThemeProvider theme={theme}> */}
       <Router>
         <Header isSignedIn={loggedIn} logOut={logOut} />
         <Box mt="2rem">
@@ -51,8 +63,8 @@ function App() {
           </Grid>
         </Box>{" "}
       </Router>
-      {/* </ThemeProvider> */}
     </div>
+    // </ThemeProvider>
   );
 }
 

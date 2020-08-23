@@ -8,7 +8,7 @@ import {
 } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import UserService from "../services/UserService";
-import uploadImage from "../services/ImageService";
+import ImageService from "../services/ImageService";
 
 const useStyles = makeStyles({
   root: {
@@ -36,11 +36,9 @@ function PostAd() {
 
   const post = async () => {
     setUploading(true);
-    ad.images = await uploadImage(images);
-    console.log(ad);
-    UserService.postNewAd(ad).then((response) => {
-      console.log(response.status);
-    });
+    ad.images = await ImageService.uploadImage(images);
+    let response = await UserService.postNewAd(ad);
+    console.log(response);
     setUploading(false);
   };
 
