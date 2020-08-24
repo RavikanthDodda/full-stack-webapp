@@ -4,6 +4,7 @@ import {
   FormControl,
   TextField,
   CircularProgress,
+  Snackbar,
 } from "@material-ui/core";
 import AuthService from "../../services/AuthService";
 import { Redirect } from "react-router-dom";
@@ -17,6 +18,7 @@ class Login extends Component {
         Password: "",
       },
       loading: false,
+      error: false,
     };
   }
 
@@ -30,7 +32,10 @@ class Login extends Component {
         this.props.logIn(response.data.jwt);
       })
       .catch((err) => {
-        console.log("wrong creds");
+        console.log(err.status);
+        this.setState({
+          error: true,
+        });
       });
     this.setState({
       form: this.state.form,
@@ -42,6 +47,11 @@ class Login extends Component {
     if (this.props.loggedIn) {
       return <Redirect to="/" />;
     }
+  };
+  handleClose = () => {
+    this.setState({
+      error: false,
+    });
   };
 
   isLoading = () => {
@@ -78,6 +88,13 @@ class Login extends Component {
   render() {
     return (
       <div style={{ textAlign: "center" }}>
+        <Snackbar
+          anchorOrigin={{ vertical: "top", horizontal: "center" }}
+          open={this.state.error}
+          autoHideDuration={6000}
+          onClose={this.handleClose}
+          message="Incorrect Email or password"
+        ></Snackbar>
         <FormControl>
           <TextField
             style={{ margin: "0.5rem" }}
@@ -85,6 +102,7 @@ class Login extends Component {
             label="Email"
             name="email"
             onChange={this.updateField}
+            required="true"
           />
           <TextField
             style={{ margin: "0.5rem" }}

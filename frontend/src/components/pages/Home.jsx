@@ -55,12 +55,14 @@ function Home() {
   const items = ads.slice(start, end);
   const handlePageChange = (pageNumber) => {
     setActivePage(pageNumber);
+    console.log(start + " " + end);
   };
 
   return (
     <React.Fragment>
-      <AdGrid ads={items} loading={loading} />
+      <AdGrid ads={ads.slice(start, end)} loading={loading} />
       <div className={classes.list}>
+        {" "}
         <Pagination
           activePage={activePage}
           itemsCountPerPage={itemsPerPage}

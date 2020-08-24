@@ -1,18 +1,18 @@
 const { default: Axios } = require("axios");
 const cloudinary_api = "https://api.cloudinary.com/v1_1/ravikanth/image/upload";
 class ImageService {
-  uploadImage = (images) => {
+  uploadImage = async (images) => {
     let urls = [];
     console.log(images);
-
-    Array.from(images).forEach(async (image) => {
+    for (let i = 0; i < images.length; i++) {
       const data = new FormData();
-      data.append("file", image);
+      data.append("file", images[i]);
       data.append("upload_preset", "ah8lqovg");
       const res = await Axios.post(cloudinary_api, data);
       urls.push(res.data.secure_url.substring(50));
-    });
+    }
 
+    console.log(urls);
     return urls;
   };
 }

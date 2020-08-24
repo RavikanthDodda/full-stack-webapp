@@ -19,7 +19,8 @@ function Ad(props) {
   useEffect(() => {
     if (props.ad.images.length === 0) setImage(placeHolderImg);
     else setImage(base_url + props.ad.images[0]);
-  }, []);
+    console.log(props.ad.images[0]);
+  });
 
   return (
     <div>

@@ -29,26 +29,35 @@ const useStyles = makeStyles({
 function PostAd() {
   const classes = useStyles();
 
-  const [ad, setAd] = useState({ title: "", details: "", contact: "" });
+  const [ad, setAd] = useState({
+    title: "",
+    details: "",
+    contact: "",
+  });
   const [uploading, setUploading] = useState(false);
 
-  let images = [];
+  let images = undefined;
 
   const post = async () => {
     setUploading(true);
     ad.images = await ImageService.uploadImage(images);
+    console.log(ad);
     let response = await UserService.postNewAd(ad);
-    console.log(response);
+    setAd({});
+    images = [];
     setUploading(false);
+  };
+
+  const postAd = () => {
+    UserService.postNewAd(ad);
   };
 
   const onChange = (e) => {
     switch (e.target.name) {
       case "title":
         setAd({
+          ...ad,
           title: e.target.value,
-          details: ad.details,
-          contact: ad.contact,
         });
         break;
       case "details":
@@ -72,7 +81,7 @@ function PostAd() {
 
   return (
     <div className={classes.root}>
-      <Card className={classes.card}>
+      <Card className={classes.card} elevation="6">
         <FormControl>
           <TextField
             label="Title"
