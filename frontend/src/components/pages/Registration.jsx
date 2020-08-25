@@ -1,18 +1,22 @@
 import React, { useState } from "react";
-import { Button, FormControl, TextField } from "@material-ui/core";
+import { Link } from "react-router-dom";
+import { Button, Typography, TextField } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import AuthService from "../../services/AuthService";
 
 const useStyles = makeStyles({
   root: {
-    width: "100%",
-    display: "flex",
-    justifyContent: "center",
+    textAlign: "center",
+    "& button": {
+      margin: "0.5rem 0",
+    },
   },
   text: {
-    margin: "0.5rem 0rem",
+    margin: "0.5rem 0",
   },
-  button: {},
+  link: {
+    textDecoration: "none",
+  },
 });
 
 function Registration(props) {
@@ -83,7 +87,7 @@ function Registration(props) {
 
   return (
     <div className={classes.root}>
-      <FormControl>
+      <form>
         <TextField
           className={classes.text}
           variant="outlined"
@@ -91,7 +95,9 @@ function Registration(props) {
           name="email"
           type="email"
           onChange={onChange}
+          required
         />
+        <br />
         <TextField
           className={classes.text}
           variant="outlined"
@@ -99,21 +105,29 @@ function Registration(props) {
           name="password"
           type="password"
           onChange={onChange}
+          required
         />
+        <br />
         <TextField
           className={classes.text}
           variant="outlined"
           label="First Name"
+          type="text"
           name="firstname"
           onChange={onChange}
+          required
         />
+        <br />
         <TextField
           className={classes.text}
           variant="outlined"
           label="Last Name"
           name="lastname"
+          type="text"
           onChange={onChange}
+          required
         />
+        <br />
         <TextField
           className={classes.text}
           variant="outlined"
@@ -121,9 +135,22 @@ function Registration(props) {
           name="phone"
           type="tel"
           onChange={onChange}
+          required
         />
-        <Button onClick={register}>Sign up</Button>
-      </FormControl>
+        <br />
+        <Button variant="outlined" type="submit">
+          Sign up
+        </Button>
+      </form>
+      <br />
+      <Typography>
+        Already have an account?
+        <Link className={classes.link} to="/login">
+          {" "}
+          Log in{" "}
+        </Link>
+        now
+      </Typography>
     </div>
   );
 }

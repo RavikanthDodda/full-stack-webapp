@@ -3,7 +3,7 @@ import { AppBar, Toolbar, Typography } from "@material-ui/core";
 import { Link } from "react-router-dom";
 import { makeStyles, useTheme } from "@material-ui/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   bar: {
     display: "flex",
     justifyContent: "start",
@@ -17,14 +17,12 @@ const useStyles = makeStyles({
     textDecoration: "None",
     marginLeft: "0.6rem",
     link: "white",
-    "& Typography": {
-      //  (theme) => theme.palette.text.primary,
-    },
+    color: theme.palette.text.primary,
   },
-});
+}));
 function Header(props) {
   const theme = useTheme();
-  const classes = useStyles();
+  const classes = useStyles(theme);
   return (
     <AppBar position="static">
       <Toolbar className={classes.bar}>
@@ -43,13 +41,13 @@ const headerOptions = (isSignedIn, logOut, classes) => {
     return (
       <React.Fragment>
         <Link to="/user/account" className={classes.link}>
-          <Typography>account</Typography>
+          <Typography>Account</Typography>
         </Link>
         <Link to="/user/ads" className={classes.link}>
-          <Typography>my ads</Typography>
+          <Typography>My ads</Typography>
         </Link>
         <Link to="/login" className={classes.link} onClick={logOut}>
-          <Typography>logout</Typography>
+          <Typography>Logout</Typography>
         </Link>
       </React.Fragment>
     );

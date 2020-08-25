@@ -1,10 +1,12 @@
 import React, { Component } from "react";
+import { Link } from "react-router-dom";
 import {
   Button,
   FormControl,
   TextField,
   CircularProgress,
   Snackbar,
+  Typography,
 } from "@material-ui/core";
 import AuthService from "../../services/AuthService";
 import { Redirect } from "react-router-dom";
@@ -22,9 +24,10 @@ class Login extends Component {
     };
   }
 
-  authenticate = async () => {
+  authenticate = async (e) => {
+    e.preventDefault();
     this.setState({
-      form: this.state.form,
+      ...this.state,
       loading: true,
     });
     await AuthService.authenticate(this.state.form)
@@ -54,14 +57,6 @@ class Login extends Component {
     });
   };
 
-  isLoading = () => {
-    return this.state.loading ? (
-      <CircularProgress />
-    ) : (
-      <Button onClick={this.authenticate}>LogIn</Button>
-    );
-  };
-
   updateField = (event) => {
     switch (event.target.name) {
       case "email":
@@ -85,6 +80,15 @@ class Login extends Component {
         break;
     }
   };
+  isLoading = () => {
+    return this.state.loading ? (
+      <CircularProgress />
+    ) : (
+      <Button variant="outlined" type="submit">
+        Log In
+      </Button>
+    );
+  };
   render() {
     return (
       <div style={{ textAlign: "center" }}>
@@ -95,26 +99,39 @@ class Login extends Component {
           onClose={this.handleClose}
           message="Incorrect Email or password"
         ></Snackbar>
-        <FormControl>
+        <form onSubmit={this.authenticate}>
           <TextField
-            style={{ margin: "0.5rem" }}
+            style={{ margin: "0.5rem 0rem" }}
             variant="outlined"
             label="Email"
             name="email"
+            type="email"
             onChange={this.updateField}
             required="true"
           />
+          <br></br>
           <TextField
-            style={{ margin: "0.5rem" }}
+            style={{ margin: "0.5rem 0rem" }}
             variant="outlined"
             label="Password"
             name="password"
             type="password"
             onChange={this.updateField}
+            required="true"
           />
-          <div style={{ textAlign: "center" }}>{this.isLoading()}</div>
+          <div style={{ textAlign: "center", margin: "0.5rem 0" }}>
+            {this.isLoading()}
+          </div>
           {this.redirect()}
-        </FormControl>
+        </form>
+        <Typography>
+          Do not have an account?
+          <Link to="/register" style={{ textDecoration: "none" }}>
+            {" "}
+            Sign up{" "}
+          </Link>
+          now
+        </Typography>
       </div>
     );
   }

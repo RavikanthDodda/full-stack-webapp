@@ -3,8 +3,9 @@ import AdGrid from "../layouts/AdGrid";
 import UserService from "../../services/UserService";
 import Pagination from "react-js-pagination";
 import { makeStyles } from "@material-ui/core/styles";
+import { useTheme } from "@material-ui/styles";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     display: "flex",
     justifyContent: "center",
@@ -15,6 +16,7 @@ const useStyles = makeStyles({
   link: {
     listStyleType: "none",
     textDecoration: "none",
+    color: theme.palette.text.primary,
     padding: "0.5rem",
   },
   item: {
@@ -24,18 +26,18 @@ const useStyles = makeStyles({
     height: "0.3rem",
     width: "0.3rem",
     display: "inline",
-    border: "1px white ridge",
-    borderRadius: "5px",
+    boxShadow: "  0px 2px 6px 0px rgba(0,0,0,0.75)",
+    borderRadius: " 0.4rem",
   },
-});
+}));
 
 function Home() {
   const [ads, setAds] = useState([]);
   const [activePage, setActivePage] = useState(1);
   const itemsPerPage = 15;
   const [loading, setLoading] = useState(false);
-
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
 
   useEffect(() => {
     const getAds = async () => {

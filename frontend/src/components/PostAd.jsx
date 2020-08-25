@@ -21,7 +21,7 @@ const useStyles = makeStyles({
     justifyContent: "center",
   },
   text: {
-    margin: "0.3rem 0rem",
+    margin: "0 0 1rem 0 ",
   },
   button: {},
 });
@@ -82,29 +82,42 @@ function PostAd() {
   return (
     <div className={classes.root}>
       <Card className={classes.card} elevation="6">
-        <FormControl>
+        <form onSubmit={post}>
           <TextField
             label="Title"
             className={classes.text}
             onChange={onChange}
             name="title"
+            required
           />
-          <TextareaAutosize
-            rowsMax={4}
-            rowsMin={2}
-            placholder="Details"
+          <br />
+          <TextField
+            label="Details"
+            className={classes.text}
             onChange={onChange}
+            multiline
             name="details"
+            required
           />
+          <br />
           <TextField
             label="Contact info"
             className={classes.text}
             onChange={onChange}
             name="contact"
+            required
           />
-          <input type="file" name="file" multiple onChange={onChange} />
-          <Button onClick={post}>Post ad</Button>
-        </FormControl>
+          <br />
+          <input
+            className={classes.text}
+            type="file"
+            name="file"
+            multiple
+            onChange={onChange}
+          />
+          <br />
+          <Button type="submit">Post ad</Button>
+        </form>
       </Card>
     </div>
   );
