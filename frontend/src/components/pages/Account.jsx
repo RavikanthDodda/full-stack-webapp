@@ -45,46 +45,31 @@ function Account(props) {
     switch (e.target.name) {
       case "email":
         setUser({
+          ...user,
           email: e.target.value,
-          password: user.password,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          phone: user.phone,
         });
         break;
       case "password":
         setUser({
-          email: user.email,
+          ...user,
           password: e.target.value,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          phone: user.phone,
         });
         break;
       case "firstname":
         setUser({
-          email: user.email,
-          password: user.password,
+          ...user,
           firstname: e.target.value,
-          lastname: user.lastname,
-          phone: user.phone,
         });
         break;
       case "lastname":
         setUser({
-          email: user.email,
-          password: user.password,
-          firstname: user.firstname,
+          ...user,
           lastname: e.target.value,
-          phone: user.phone,
         });
         break;
       case "phone":
         setUser({
-          email: user.email,
-          password: user.password,
-          firstname: user.firstname,
-          lastname: user.lastname,
+          ...user,
           phone: e.target.value,
         });
         break;
@@ -109,7 +94,7 @@ function Account(props) {
             label="Email"
             name="email"
             type="email"
-            value={user.email}
+            defaultValue={user.email}
           />
           <TextField
             className={classes.text}

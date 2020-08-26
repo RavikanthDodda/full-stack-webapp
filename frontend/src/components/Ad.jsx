@@ -8,11 +8,11 @@ import {
   CardActions,
   Button,
 } from "@material-ui/core";
+import UserService from "../services/UserService";
 import placeHolderImg from "../images/img_placeholder.jpeg";
 
 function Ad(props) {
   const { title, details } = props.ad;
-  const { key } = props;
   const [image, setImage] = useState(undefined);
   const base_url = "https://res.cloudinary.com/ravikanth/image/upload/";
 
@@ -22,9 +22,31 @@ function Ad(props) {
     console.log(props.ad.images[0]);
   });
 
+  const deleteAd = () => {
+    UserService.deleteAd(props.ad.id).then((res) => {
+      setImage(undefined);
+    });
+  };
+  const isUserAd = (props) => {
+    if (props.delete) {
+      return (
+        <CardActions>
+          <Button
+            size="small"
+            color="primary"
+            onClick={() => deleteAd(props.ad.id)}
+          >
+            delete
+          </Button>
+        </CardActions>
+      );
+    }
+    return;
+  };
+
   return (
     <div>
-      <Card elevation="6">
+      <Card elevation={6}>
         <CardActionArea>
           <CardMedia
             component="img"
@@ -44,11 +66,7 @@ function Ad(props) {
             </Typography> */}
           </CardContent>
         </CardActionArea>
-        <CardActions>
-          <Button size="small" color="primary">
-            Learn More
-          </Button>
-        </CardActions>
+        {isUserAd(props)}
       </Card>
     </div>
   );

@@ -2,7 +2,6 @@ import React, { Component } from "react";
 import { Link } from "react-router-dom";
 import {
   Button,
-  FormControl,
   TextField,
   CircularProgress,
   Snackbar,
@@ -107,7 +106,7 @@ class Login extends Component {
             name="email"
             type="email"
             onChange={this.updateField}
-            required="true"
+            required
           />
           <br></br>
           <TextField
@@ -117,7 +116,7 @@ class Login extends Component {
             name="password"
             type="password"
             onChange={this.updateField}
-            required="true"
+            required
           />
           <div style={{ textAlign: "center", margin: "0.5rem 0" }}>
             {this.isLoading()}

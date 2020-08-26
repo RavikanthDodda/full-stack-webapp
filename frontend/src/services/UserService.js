@@ -14,8 +14,12 @@ class UserService {
     return Axios.get(baseUrl + "/user/ads", { withCredentials: true });
   };
 
-  postNewAd = async (ad) => {
-    return await Axios.post(baseUrl + "/ad", ad, { withCredentials: true });
+  postNewAd = (ad) => {
+    return Axios.post(baseUrl + "/ad", ad, { withCredentials: true });
+  };
+  deleteAd = (id) => {
+    console.log(id);
+    return Axios.delete(baseUrl + `/ad?id=${id}`, { withCredentials: true });
   };
 }
 

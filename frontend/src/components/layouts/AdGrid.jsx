@@ -17,7 +17,7 @@ function AdGrid(props) {
         {ads.map((ad) => (
           <Grid key={ad.id} item xs={12} sm={6} md={4}>
             <Box mt={2}>
-              <Ad key={ad.id} ad={ad} />
+              <Ad key={ad.id} ad={ad} delete={props.delete} />
             </Box>
           </Grid>
         ))}

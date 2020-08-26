@@ -79,7 +79,8 @@ function Registration(props) {
       default:
     }
   };
-  const register = () => {
+  const register = (e) => {
+    e.preventDefault();
     AuthService.register(user).then((res) => {
       console.log(res.status);
     });
@@ -87,7 +88,7 @@ function Registration(props) {
 
   return (
     <div className={classes.root}>
-      <form>
+      <form onSubmit={register}>
         <TextField
           className={classes.text}
           variant="outlined"

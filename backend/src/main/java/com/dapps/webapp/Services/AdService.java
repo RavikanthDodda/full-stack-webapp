@@ -3,14 +3,14 @@ package com.dapps.webapp.Services;
 import com.dapps.webapp.JpaRepositories.AdRepository;
 import com.dapps.webapp.Models.Ad;
 import com.dapps.webapp.Models.Image;
+import com.dapps.webapp.Models.User;
 import com.dapps.webapp.Utils.AdReqRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -46,14 +46,20 @@ public class AdService {
         ad.setImages(images);
 
     }
-
+    public void deleteAd( Long id){
+        Optional<Ad> ad= adRepository.findById(id);
+        ad.ifPresent(value -> {
+            adRepository.delete(value);
+            imageService.deleteByAd(value);
+        });
+    }
     private List<AdReqRes> getAdResponse(Iterable<Ad> ads){
-        List<AdReqRes> adResponse = new ArrayList<>();
+        List<AdReqRes> adResponses = new ArrayList<>();
         ads.forEach(ad -> {
             List<String> images = ad.getImages().stream().map(Image::getUrl).collect(Collectors.toList());
-            AdReqRes adReqRes = new AdReqRes(ad.getContact(),ad.getTitle(), ad.getDetails(),images);
-            adResponse.add(adReqRes);
+            AdReqRes adReqRes = new AdReqRes(ad.getContact(),ad.getTitle(), ad.getDetails(), ad.getId(), images);
+            adResponses.add(adReqRes);
         });
-        return adResponse;
+        return adResponses;
     }
 }

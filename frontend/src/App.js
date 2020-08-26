@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
 import { Grid, Box } from "@material-ui/core";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
-import purple from "@material-ui/core/colors/purple";
 import green from "@material-ui/core/colors/green";
 
 import Header from "./components/layouts/Header";
@@ -39,9 +38,9 @@ function App() {
     setLoggedIn(true);
   };
 
-  const logOut = async () => {
-    await cookies.remove("jwt");
+  const logOut = () => {
     setLoggedIn(false);
+    cookies.remove("jwt");
   };
   return (
     <ThemeProvider theme={theme}>

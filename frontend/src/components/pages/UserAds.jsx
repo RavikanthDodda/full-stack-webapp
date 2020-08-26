@@ -28,7 +28,7 @@ function UserAds() {
         </Typography>
       );
     } else {
-      return <AdGrid ads={ads} />;
+      return <AdGrid ads={ads} delete={true} />;
     }
   };
   return (

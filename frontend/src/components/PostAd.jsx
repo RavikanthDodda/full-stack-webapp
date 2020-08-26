@@ -1,11 +1,5 @@
 import React, { useState } from "react";
-import {
-  FormControl,
-  TextField,
-  TextareaAutosize,
-  Button,
-  Card,
-} from "@material-ui/core";
+import { TextField, Button, Card } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 import UserService from "../services/UserService";
 import ImageService from "../services/ImageService";
@@ -38,20 +32,17 @@ function PostAd() {
 
   let images = undefined;
 
-  const post = async () => {
+  const post = async (e) => {
+    e.preventDefault();
     setUploading(true);
     ad.images = await ImageService.uploadImage(images);
     console.log(ad);
-    let response = await UserService.postNewAd(ad);
-    setAd({});
-    images = [];
-    setUploading(false);
+    UserService.postNewAd(ad).then((res) => {
+      setAd({});
+      images = [];
+      setUploading(false);
+    });
   };
-
-  const postAd = () => {
-    UserService.postNewAd(ad);
-  };
-
   const onChange = (e) => {
     switch (e.target.name) {
       case "title":
@@ -81,7 +72,7 @@ function PostAd() {
 
   return (
     <div className={classes.root}>
-      <Card className={classes.card} elevation="6">
+      <Card className={classes.card} elevation={6}>
         <form onSubmit={post}>
           <TextField
             label="Title"

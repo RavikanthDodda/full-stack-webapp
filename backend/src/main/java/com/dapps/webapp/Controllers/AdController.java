@@ -33,6 +33,15 @@ public class AdController {
     }
 
     @CrossOrigin(allowCredentials = "true")
+    @DeleteMapping("/ad")
+    public ResponseEntity<?> deleteAd(@RequestHeader String Cookie,@RequestParam String id){
+
+        String email = jwtUtil.getUsernameFromToken(Cookie.substring(4));
+        adService.deleteAd(Long.parseLong(id));
+        return ResponseEntity.ok(null);
+    }
+
+    @CrossOrigin(allowCredentials = "true")
     @GetMapping("/user/ads")
     public ResponseEntity<?> getUserAds(@RequestHeader String Cookie){
 

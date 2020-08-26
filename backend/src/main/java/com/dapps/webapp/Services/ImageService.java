@@ -21,4 +21,9 @@ public class ImageService {
     public void save(Image image){
         imageRepository.save(image);
     }
+
+    public void deleteByAd(Ad ad){
+        if(imageRepository.findByAd(ad).size()>0)
+        imageRepository.deleteByAd(ad);
+    }
 }

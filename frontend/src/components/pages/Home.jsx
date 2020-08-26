@@ -62,7 +62,7 @@ function Home() {
 
   return (
     <React.Fragment>
-      <AdGrid ads={ads.slice(start, end)} loading={loading} />
+      <AdGrid ads={items} loading={loading} delete={false} />
       <div className={classes.list}>
         {" "}
         <Pagination

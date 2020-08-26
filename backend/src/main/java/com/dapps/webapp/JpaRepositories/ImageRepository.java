@@ -9,4 +9,5 @@ import java.util.List;
 public interface ImageRepository extends CrudRepository<Image, Long> {
 
     List<Image> findByAd(Ad ad);
+    void deleteByAd(Ad ad);
 }
