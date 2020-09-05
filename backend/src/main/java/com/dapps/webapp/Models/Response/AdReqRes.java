@@ -1,4 +1,4 @@
-package com.dapps.webapp.Utils;
+package com.dapps.webapp.Models.Response;
 
 import java.lang.reflect.Array;
 import java.util.Arrays;

@@ -8,8 +8,7 @@ import { Typography } from "@material-ui/core";
 
 function UserAds() {
   const [ads, setAds] = useState([]);
-
-  useEffect(() => {
+  const loadAds = () => {
     UserService.getUserAds()
       .then((response) => {
         setAds(response.data);
@@ -17,23 +16,26 @@ function UserAds() {
       .catch((err) => {
         console.log(err);
       });
+  };
+  useEffect(() => {
+    loadAds();
   }, []);
 
   const hasAds = (ads) => {
     if (ads.length === 0) {
       return (
-        <Typography>
+        <Typography style={{ textAlign: "center" }}>
           {" "}
           You did not post any ads. Post one now from the above form.
         </Typography>
       );
     } else {
-      return <AdGrid ads={ads} delete={true} />;
+      return <AdGrid ads={ads} actions={true} loadAds={loadAds} />;
     }
   };
   return (
     <div>
-      <PostAd />
+      <PostAd loadAds={loadAds} />
       {hasAds(ads)}
     </div>
   );

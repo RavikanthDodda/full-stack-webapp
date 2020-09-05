@@ -1,78 +1,91 @@
 import React, { useState } from "react";
 import { Link } from "react-router-dom";
-import { Button, Typography, TextField } from "@material-ui/core";
-import { makeStyles } from "@material-ui/core/styles";
+import {
+  Button,
+  Typography,
+  TextField,
+  Snackbar,
+  CircularProgress,
+} from "@material-ui/core";
 import AuthService from "../../services/AuthService";
+import { useTheme, makeStyles } from "@material-ui/styles";
+import LoadingButton from "../LoadingButton";
 
-const useStyles = makeStyles({
+const useStyles = makeStyles((theme) => ({
   root: {
     textAlign: "center",
     "& button": {
       margin: "0.5rem 0",
     },
   },
+  form: {
+    margin: "0 auto",
+    [theme.breakpoints.down("sm")]: {
+      width: "90%",
+    },
+    [theme.breakpoints.up("md")]: {
+      width: "40%",
+    },
+  },
   text: {
     margin: "0.5rem 0",
+    width: "100%",
   },
   link: {
     textDecoration: "none",
   },
-});
+}));
 
 function Registration(props) {
-  const classes = useStyles();
+  const theme = useTheme();
+  const classes = useStyles(theme);
   const [user, setUser] = useState({
     email: "",
-    password: "",
+    password1: "",
+    password2: "",
     firstname: "",
     lastname: "",
     phone: "",
   });
+  const [open, setOpen] = useState(false);
+  const [msg, setMsg] = useState("");
+  const [loading, setLoading] = useState(false);
 
   const onChange = (e) => {
     switch (e.target.name) {
       case "email":
         setUser({
+          ...user,
           email: e.target.value,
-          password: user.password,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          phone: user.phone,
         });
         break;
       case "password":
         setUser({
-          email: user.email,
+          ...user,
           password: e.target.value,
-          firstname: user.firstname,
-          lastname: user.lastname,
-          phone: user.phone,
+        });
+        break;
+      case "password2":
+        setUser({
+          ...user,
+          password2: e.target.value,
         });
         break;
       case "firstname":
         setUser({
-          email: user.email,
-          password: user.password,
+          ...user,
           firstname: e.target.value,
-          lastname: user.lastname,
-          phone: user.phone,
         });
         break;
       case "lastname":
         setUser({
-          email: user.email,
-          password: user.password,
-          firstname: user.firstname,
+          ...user,
           lastname: e.target.value,
-          phone: user.phone,
         });
         break;
       case "phone":
         setUser({
-          email: user.email,
-          password: user.password,
-          firstname: user.firstname,
-          lastname: user.lastname,
+          ...user,
           phone: e.target.value,
         });
         break;
@@ -81,14 +94,39 @@ function Registration(props) {
   };
   const register = (e) => {
     e.preventDefault();
-    AuthService.register(user).then((res) => {
-      console.log(res.status);
-    });
+    setLoading(true);
+    if (user.password === user.password2) {
+      AuthService.register(user)
+        .then((res) => {
+          setMsg("Registration successful. Proceed to Login.");
+          setOpen(true);
+        })
+        .catch((err) => {
+          console.log(err);
+          setMsg("Something wrong! Please try again later.");
+          setOpen(true);
+        })
+        .finally(() => {
+          setLoading(false);
+        });
+    } else {
+      setOpen(true);
+    }
   };
 
+  const handleClose = () => {
+    setOpen(false);
+  };
   return (
     <div className={classes.root}>
-      <form onSubmit={register}>
+      <Snackbar
+        anchorOrigin={{ vertical: "top", horizontal: "center" }}
+        open={open}
+        autoHideDuration={6000}
+        onClose={handleClose}
+        message={msg}
+      ></Snackbar>
+      <form className={classes.form} onSubmit={register}>
         <TextField
           className={classes.text}
           variant="outlined"
@@ -109,6 +147,17 @@ function Registration(props) {
           required
         />
         <br />
+        <TextField
+          className={classes.text}
+          variant="outlined"
+          label="Re-type password"
+          name="password2"
+          type="password"
+          onChange={onChange}
+          required
+        />
+        <br />
+
         <TextField
           className={classes.text}
           variant="outlined"
@@ -139,9 +188,7 @@ function Registration(props) {
           required
         />
         <br />
-        <Button variant="outlined" type="submit">
-          Sign up
-        </Button>
+        <LoadingButton loading={loading} text={"Sign Up"} />
       </form>
       <br />
       <Typography>

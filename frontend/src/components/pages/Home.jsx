@@ -22,9 +22,9 @@ const useStyles = makeStyles((theme) => ({
   item: {
     textDecoration: "none",
     padding: "0.1rem",
-    margin: "0.2rem",
-    height: "0.3rem",
-    width: "0.3rem",
+    margin: "0.3rem",
+    height: "0.4rem",
+    width: "0.4rem",
     display: "inline",
     boxShadow: "  0px 2px 6px 0px rgba(0,0,0,0.75)",
     borderRadius: " 0.4rem",
@@ -62,7 +62,7 @@ function Home() {
 
   return (
     <React.Fragment>
-      <AdGrid ads={items} loading={loading} delete={false} />
+      <AdGrid ads={items} loading={loading} actions={false} />
       <div className={classes.list}>
         {" "}
         <Pagination

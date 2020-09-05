@@ -2,7 +2,7 @@ package com.dapps.webapp.Services;
 
 import com.dapps.webapp.JpaRepositories.UserRepository;
 import com.dapps.webapp.Models.User;
-import com.dapps.webapp.Utils.UserDetailsResponse;
+import com.dapps.webapp.Models.Response.UserDetailsResponse;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;

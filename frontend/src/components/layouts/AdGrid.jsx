@@ -15,9 +15,14 @@ function AdGrid(props) {
     <div style={{ marginBottom: "2rem" }}>
       <Grid container spacing={2} alignItems="center" justify="center">
         {ads.map((ad) => (
-          <Grid key={ad.id} item xs={12} sm={6} md={4}>
+          <Grid item xs={12} sm={6} md={4} lg={3}>
             <Box mt={2}>
-              <Ad key={ad.id} ad={ad} delete={props.delete} />
+              <Ad
+                key={ad.id}
+                ad={ad}
+                actions={props.actions}
+                loadAds={props.loadAds}
+              />
             </Box>
           </Grid>
         ))}

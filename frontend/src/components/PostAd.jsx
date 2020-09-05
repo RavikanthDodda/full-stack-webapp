@@ -1,6 +1,7 @@
 import React, { useState } from "react";
-import { TextField, Button, Card } from "@material-ui/core";
+import { TextField, Button, Card, Snackbar } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import LoadingButton from "./LoadingButton";
 import UserService from "../services/UserService";
 import ImageService from "../services/ImageService";
 
@@ -11,8 +12,8 @@ const useStyles = makeStyles({
   },
   card: {
     padding: "1rem 4rem",
-    display: "flex",
-    justifyContent: "center",
+    marginBottom: "2rem",
+    textAlign: "center",
   },
   text: {
     margin: "0 0 1rem 0 ",
@@ -20,7 +21,7 @@ const useStyles = makeStyles({
   button: {},
 });
 
-function PostAd() {
+function PostAd(props) {
   const classes = useStyles();
 
   const [ad, setAd] = useState({
@@ -29,18 +30,20 @@ function PostAd() {
     contact: "",
   });
   const [uploading, setUploading] = useState(false);
+  const [notify, setNotify] = useState(false);
 
-  let images = undefined;
+  let images = [];
 
   const post = async (e) => {
     e.preventDefault();
     setUploading(true);
     ad.images = await ImageService.uploadImage(images);
-    console.log(ad);
     UserService.postNewAd(ad).then((res) => {
       setAd({});
       images = [];
+      setNotify(true);
       setUploading(false);
+      props.loadAds();
     });
   };
   const onChange = (e) => {
@@ -72,6 +75,15 @@ function PostAd() {
 
   return (
     <div className={classes.root}>
+      <Snackbar
+        anchorOrigin={{ vertical: "bottom", horizontal: "center" }}
+        open={notify}
+        autoHideDuration={6000}
+        onClose={() => {
+          setNotify(false);
+        }}
+        message="Ad has been posted"
+      ></Snackbar>
       <Card className={classes.card} elevation={6}>
         <form onSubmit={post}>
           <TextField
@@ -107,7 +119,8 @@ function PostAd() {
             onChange={onChange}
           />
           <br />
-          <Button type="submit">Post ad</Button>
+
+          <LoadingButton loading={uploading} text={"Post Ad"} />
         </form>
       </Card>
     </div>

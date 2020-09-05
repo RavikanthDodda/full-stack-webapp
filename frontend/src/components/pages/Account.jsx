@@ -38,6 +38,8 @@ function Account(props) {
       setUser(response.data);
     };
     getUser();
+
+    console.log(user);
     setLoading(false);
   }, []);
 

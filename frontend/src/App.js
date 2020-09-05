@@ -1,6 +1,6 @@
 import Cookies from "universal-cookie";
 import React, { useState } from "react";
-import { BrowserRouter as Router, Route, Switch } from "react-router-dom";
+import { Route, Switch } from "react-router-dom";
 import { Grid, Box } from "@material-ui/core";
 import { ThemeProvider, createMuiTheme } from "@material-ui/core/styles";
 import green from "@material-ui/core/colors/green";
@@ -10,6 +10,7 @@ import Login from "./components/pages/Login";
 import Registration from "./components/pages/Registration";
 import Account from "./components/pages/Account";
 import UserAds from "./components/pages/UserAds";
+import AdPage from "./components/pages/AdPage";
 import Home from "./components/pages/Home";
 
 const cookies = new Cookies();
@@ -33,39 +34,41 @@ const theme = createMuiTheme({
 function App() {
   const [loggedIn, setLoggedIn] = useState(cookies.get("jwt") != null);
   const logIn = async (jwt) => {
-    console.log(jwt);
     cookies.set("jwt", jwt);
     setLoggedIn(true);
   };
 
-  const logOut = () => {
-    setLoggedIn(false);
+  const logOut = async () => {
     cookies.remove("jwt");
+    setLoggedIn(false);
   };
   return (
     <ThemeProvider theme={theme}>
       <div className="App">
-        <Router>
-          <Header isSignedIn={loggedIn} logOut={logOut} />
-          <Box mt="2rem">
-            <Grid container item alignItems="center">
-              <Grid item xs={false} sm={false} md={1} />
-              <Grid item xs={12} sm={12} md={10}>
-                <Switch>
-                  <Route
-                    path="/login"
-                    render={() => <Login logIn={logIn} loggedIn={loggedIn} />}
-                  />
-                  <Route exact path="/" render={() => <Home />} />
-                  <Route path="/register" render={() => <Registration />} />
-                  <Route path="/user/account" render={() => <Account />} />
-                  <Route path="/user/ads" render={() => <UserAds />} />
-                </Switch>
-              </Grid>
-              <Grid item xs={false} sm={false} md={1} />
+        <Header isSignedIn={loggedIn} logOut={logOut} />
+        <Box mt="2rem">
+          <Grid container item alignItems="center">
+            <Grid item xs={1} />
+            <Grid item xs={10}>
+              <Switch>
+                <Route
+                  path="/login"
+                  render={() => <Login logIn={logIn} loggedIn={loggedIn} />}
+                />
+                <Route exact path="/" render={() => <Home />} />
+                <Route exact path="/register" render={() => <Registration />} />
+                <Route exact path="/user/account" render={() => <Account />} />
+                <Route exact path="/user/ads" render={() => <UserAds />} />
+                <Route
+                  exact
+                  path="/ad"
+                  render={(props) => <AdPage {...props} />}
+                />
+              </Switch>
             </Grid>
-          </Box>{" "}
-        </Router>
+            <Grid item xs={1} />
+          </Grid>
+        </Box>{" "}
       </div>
     </ThemeProvider>
   );

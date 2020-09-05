@@ -1,4 +1,4 @@
-package com.dapps.webapp.Utils;
+package com.dapps.webapp.Models.Response;
 
 import com.dapps.webapp.Models.Ad;
 import com.dapps.webapp.Models.User;

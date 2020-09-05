@@ -1,6 +1,6 @@
 package com.dapps.webapp.Models;
 
-import com.dapps.webapp.Utils.AdReqRes;
+import com.dapps.webapp.Models.Response.AdReqRes;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;

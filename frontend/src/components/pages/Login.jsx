@@ -1,13 +1,9 @@
 import React, { Component } from "react";
 import { Link } from "react-router-dom";
-import {
-  Button,
-  TextField,
-  CircularProgress,
-  Snackbar,
-  Typography,
-} from "@material-ui/core";
+import { TextField, Snackbar, Typography } from "@material-ui/core";
+import LoadingButton from "../LoadingButton";
 import AuthService from "../../services/AuthService";
+
 import { Redirect } from "react-router-dom";
 
 class Login extends Component {
@@ -34,7 +30,7 @@ class Login extends Component {
         this.props.logIn(response.data.jwt);
       })
       .catch((err) => {
-        console.log(err.status);
+        console.log(err.response);
         this.setState({
           error: true,
         });
@@ -79,15 +75,7 @@ class Login extends Component {
         break;
     }
   };
-  isLoading = () => {
-    return this.state.loading ? (
-      <CircularProgress />
-    ) : (
-      <Button variant="outlined" type="submit">
-        Log In
-      </Button>
-    );
-  };
+
   render() {
     return (
       <div style={{ textAlign: "center" }}>
@@ -105,27 +93,31 @@ class Login extends Component {
             label="Email"
             name="email"
             type="email"
+            error={this.state.error}
             onChange={this.updateField}
             required
           />
-          <br></br>
+          <br />
           <TextField
             style={{ margin: "0.5rem 0rem" }}
             variant="outlined"
             label="Password"
             name="password"
             type="password"
+            error={this.state.error}
             onChange={this.updateField}
             required
           />
-          <div style={{ textAlign: "center", margin: "0.5rem 0" }}>
-            {this.isLoading()}
-          </div>
+          <br />
+          <LoadingButton loading={this.state.loading} text={"Log In"} />
           {this.redirect()}
         </form>
         <Typography>
           Do not have an account?
-          <Link to="/register" style={{ textDecoration: "none" }}>
+          <Link
+            to="/register"
+            style={{ textDecoration: "none", marginTop: "0.5rem" }}
+          >
             {" "}
             Sign up{" "}
           </Link>

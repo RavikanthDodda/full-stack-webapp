@@ -1,14 +1,10 @@
 package com.dapps.webapp.Controllers;
 
-import com.dapps.webapp.Models.User;
+import com.dapps.webapp.Models.Response.AuthResponse;
+import com.dapps.webapp.Models.Requests.AuthRequest;
 import com.dapps.webapp.Services.MyUserDetailsService;
-import com.dapps.webapp.Services.UserService;
-import com.dapps.webapp.Utils.AuthRequest;
-import com.dapps.webapp.Utils.AuthResponse;
-import com.dapps.webapp.Utils.CustomUserDetails;
-import com.dapps.webapp.Utils.JwtUtil;
+import com.dapps.webapp.Utils.*;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Bean;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -32,7 +28,7 @@ public class AuthenticationController {
     JwtUtil jwtUtil;
 
     @PostMapping("/authenticate")
-    public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest) throws Exception{
+    public ResponseEntity<?> authenticate(@RequestBody AuthRequest authRequest){
         try{
             authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(authRequest.getEmail(), authRequest.getPassword()));
         }

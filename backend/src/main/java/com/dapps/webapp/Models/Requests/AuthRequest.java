@@ -1,4 +1,4 @@
-package com.dapps.webapp.Utils;
+package com.dapps.webapp.Models.Requests;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;

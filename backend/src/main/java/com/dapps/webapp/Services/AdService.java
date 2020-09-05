@@ -3,8 +3,7 @@ package com.dapps.webapp.Services;
 import com.dapps.webapp.JpaRepositories.AdRepository;
 import com.dapps.webapp.Models.Ad;
 import com.dapps.webapp.Models.Image;
-import com.dapps.webapp.Models.User;
-import com.dapps.webapp.Utils.AdReqRes;
+import com.dapps.webapp.Models.Response.AdReqRes;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -52,6 +51,13 @@ public class AdService {
             adRepository.delete(value);
             imageService.deleteByAd(value);
         });
+    }
+
+    public void updateAd( Long id){
+        Optional<Ad> ad= adRepository.findById(id);
+        ad.ifPresent(value ->
+            adRepository.save(value)
+        );
     }
     private List<AdReqRes> getAdResponse(Iterable<Ad> ads){
         List<AdReqRes> adResponses = new ArrayList<>();

@@ -1,14 +1,14 @@
 package com.dapps.webapp.Controllers;
 
 import com.dapps.webapp.Services.AdService;
-import com.dapps.webapp.Utils.AdReqRes;
+import com.dapps.webapp.Models.Response.AdReqRes;
 import com.dapps.webapp.Utils.JwtUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 
-
+@CrossOrigin(allowCredentials = "true")
 @RestController
 public class AdController {
 
@@ -18,7 +18,6 @@ public class AdController {
     @Autowired
     JwtUtil jwtUtil;
 
-    @CrossOrigin(allowCredentials = "true")
     @PostMapping("/ad")
     public ResponseEntity<?> postAd(@RequestHeader String Cookie,@RequestBody AdReqRes ad){
         String email = jwtUtil.getUsernameFromToken(Cookie.substring(4));
@@ -26,13 +25,11 @@ public class AdController {
         return ResponseEntity.ok(null);
     }
 
-    @CrossOrigin
     @GetMapping("/ads")
     public ResponseEntity<?> getAllAds(){
         return ResponseEntity.ok(adService.getAllAds());
     }
 
-    @CrossOrigin(allowCredentials = "true")
     @DeleteMapping("/ad")
     public ResponseEntity<?> deleteAd(@RequestHeader String Cookie,@RequestParam String id){
 
@@ -41,7 +38,15 @@ public class AdController {
         return ResponseEntity.ok(null);
     }
 
-    @CrossOrigin(allowCredentials = "true")
+
+    @PutMapping("/ad")
+    public ResponseEntity<?> updateAd(@RequestHeader String Cookie,@RequestParam String id){
+
+        String email = jwtUtil.getUsernameFromToken(Cookie.substring(4));
+        adService.updateAd(Long.parseLong(id));
+        return ResponseEntity.ok(null);
+    }
+
     @GetMapping("/user/ads")
     public ResponseEntity<?> getUserAds(@RequestHeader String Cookie){
 
